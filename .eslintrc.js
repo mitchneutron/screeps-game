@@ -40,7 +40,13 @@ module.exports = {
         accessibility: "explicit"
       }
     ],
-    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-var-requires" : "off",
+    "@typescript-eslint/no-unsafe-assignment" : "warn",
+    "@typescript-eslint/no-unsafe-member-access" : "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unsafe-call": "warn",
     "@typescript-eslint/no-parameter-properties": "off",
     "@typescript-eslint/no-unused-expressions": "error",
     "@typescript-eslint/no-use-before-define": ["error", { functions: false }],
