@@ -37,7 +37,7 @@ module.exports = {
     "@typescript-eslint/explicit-member-accessibility": [
       "error",
       {
-        accessibility: "explicit"
+        accessibility: "no-public"
       }
     ],
     "@typescript-eslint/no-namespace": "off",
@@ -54,6 +54,7 @@ module.exports = {
     "@typescript-eslint/space-within-parens": ["off", "never"],
     "@typescript-eslint/unified-signatures": "error",
     "@typescript-eslint/restrict-plus-operands" : "off",
+    "@typescript-eslint/ban-ts-comment" : "warn",
     "arrow-parens": ["off", "as-needed"],
     camelcase: "error",
     complexity: "off",
@@ -75,6 +76,7 @@ module.exports = {
     "no-invalid-this": "off",
     "no-multiple-empty-lines": "off",
     "no-new-wrappers": "error",
+    "no-debugger": "off",
     "no-shadow": [
       "error",
       {
@@ -84,7 +86,7 @@ module.exports = {
     "no-throw-literal": "error",
     "no-trailing-spaces": "off",
     "no-undef-init": "error",
-    "no-underscore-dangle": "warn",
+    "no-underscore-dangle": "off",
     "no-var": "error",
     "object-shorthand": "error",
     "one-var": ["error", "never"],
@@ -92,6 +94,8 @@ module.exports = {
     radix: "error",
     "sort-imports": "warn",
     "spaced-comment": "error",
-    "prettier/prettier": "error",
+    "prettier/prettier": "off",
+    "no-case-declarations": "off",
+    "semi": [2,"always"],
   }
 };

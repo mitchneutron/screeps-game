@@ -1,9 +1,11 @@
+import { CreepType } from "../../const/CreepType";
+
 export class SpawnManager {
     private static bodyMap: Map<CreepType, BodyPartConstant[]> = new Map([
         [CreepType.BasicWorker, [WORK, CARRY, MOVE]],
     ]);
 
-    public static run(spawn: StructureSpawn): void {
+    static run(spawn: StructureSpawn): void {
         if (spawn.memory.isInitialized !== true) this.initSpawn(spawn);
         if (spawn.memory.deadCreepsToSpawn.length > 0 && this.spawnDeadCreep(spawn) === OK) return;
 

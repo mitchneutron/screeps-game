@@ -1,3 +1,6 @@
+import { CreepActionConst } from "./const/CreepActionConst";
+import { CreepType } from "./const/CreepType";
+
 export {};
 /*
   Example types, expand on these or remove them and add your own.
@@ -19,19 +22,7 @@ declare global {
         spawn: Id<StructureSpawn>;
         type: CreepType;
         target?: Id<any>;
-        action?: CreepAction;
-    }
-
-    enum CreepAction {
-        Harvest,
-        Build,
-        Upgrade,
-        Store,
-    }
-
-    enum CreepType {
-        BasicWorker,
-        AdvancedWorker,
+        action?: CreepActionConst;
     }
 
     interface SpawnMemory {
