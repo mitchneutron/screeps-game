@@ -2,12 +2,12 @@ import { ICreepAction } from "./ICreepAction";
 
 export abstract class AbstractAction<T> implements ICreepAction {
     performAction(creep: Creep): boolean {
-        if(this.cancelOnEmpty() && creep.store.getUsedCapacity() === 0) return false
-        if(this.cancelOnFull() && creep.store.getFreeCapacity() === 0) return false
+        if(this.cancelOnEmpty() && creep.store.getUsedCapacity() === 0) return false;
+        if(this.cancelOnFull() && creep.store.getFreeCapacity() === 0) return false;
 
-        const target : T | null = Game.getObjectById<T>(creep.memory.target!)
-        if(target == null) return false
-        return this._performAction(creep, target)
+        const target : T | null = Game.getObjectById<T>(creep.memory.target!);
+        if(target == null) return false;
+        return this._performAction(creep, target);
     }
     protected abstract _performAction(creep: Creep, target: T): boolean
     abstract cancelOnEmpty() : boolean
@@ -27,13 +27,13 @@ export abstract class AbstractAction<T> implements ICreepAction {
                 opacity: 0.1,
             },
         });
-        return this.isValidResult(result)
+        return this.isValidResult(result);
     }
 
     protected isValidResult(result : ScreepsReturnCode) : boolean {
         return result === OK ||
             result === ERR_TIRED ||
-            result === ERR_BUSY
+            result === ERR_BUSY;
     }
 }
 

@@ -5,7 +5,7 @@ export class ErrorMapper {
     // Cache consumer
     private static _consumer?: SourceMapConsumer;
 
-    public static get consumer(): SourceMapConsumer {
+    static get consumer(): SourceMapConsumer {
         if (this._consumer == null) {
             this._consumer = new SourceMapConsumer(require("main.js.map"));
         }
@@ -14,7 +14,7 @@ export class ErrorMapper {
     }
 
     // Cache previously mapped traces to improve performance
-    public static cache: { [key: string]: string } = {};
+    static cache: { [key: string]: string } = {};
 
     /**
      * Generates a stack trace using a source map generate original symbol names.
@@ -25,7 +25,7 @@ export class ErrorMapper {
      * @param {Error | string} error The error or original stack trace
      * @returns {string} The source-mapped stack trace
      */
-    public static sourceMappedStackTrace(error: Error | string): string {
+    static sourceMappedStackTrace(error: Error | string): string {
         const stack: string = error instanceof Error ? (error.stack as string) : error;
         if (Object.prototype.hasOwnProperty.call(this.cache, stack)) {
             return this.cache[stack];
@@ -69,7 +69,7 @@ export class ErrorMapper {
         return outStack;
     }
 
-    public static wrapLoop(loop: () => void): () => void {
+    static wrapLoop(loop: () => void): () => void {
         return () => {
             try {
                 loop();
