@@ -14,10 +14,10 @@ export const loop = ErrorMapper.wrapLoop(() => {
     CreepActionManager.run();
 
     // Automatically delete memory of missing creeps
-    handleMemory();
+    handleCleanup();
 });
 
-function handleMemory() {
+function handleCleanup() {
     for (const name in Memory.creeps) {
         if (!Game.creeps[name]) {
             const creepMemory = Memory.creeps[name];

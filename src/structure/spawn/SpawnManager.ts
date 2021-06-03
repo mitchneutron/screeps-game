@@ -39,6 +39,7 @@ export class SpawnManager {
         spawn.memory.basicWorkersRequired = 3;
         spawn.memory.advancedWorkersRequired = sources.length * 2;
         spawn.memory.deadCreepsToSpawn = [];
+        // spawn.room.memory.spawns++; //premature optimization is the devil
         spawn.memory.isInitialized = true;
     }
 

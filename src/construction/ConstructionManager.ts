@@ -11,7 +11,9 @@ export class ConstructionManager {
     }
 
     private static createBuildingsForRoomNeeds() : Map<Room, BuildableStructureConstant[]> {
-        // TODO
+        for(const name in Game.rooms) {
+            const room = Game.rooms[name];
+        }
         return new Map<Room, BuildableStructureConstant[]>();
     }
 
