@@ -5,7 +5,12 @@ export class SpawnManager {
         [CreepType.BasicWorker, [WORK, CARRY, MOVE]],
     ]);
 
-    static run(spawn: StructureSpawn): void {
+    static run(): void {
+        for (const spawnsKey in Game.spawns)
+            this.handleSpawn(Game.spawns[spawnsKey]);
+    }
+
+    static handleSpawn(spawn: StructureSpawn) : void {
         if (spawn.memory.isInitialized !== true) this.initSpawn(spawn);
         if (spawn.memory.deadCreepsToSpawn.length > 0 && this.spawnDeadCreep(spawn) === OK) return;
 

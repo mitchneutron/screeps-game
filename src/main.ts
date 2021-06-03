@@ -1,19 +1,17 @@
 import { CreepActionManager } from "./creep/CreepActionManager";
 import { ErrorMapper } from "./utils/ErrorMapper";
 import { SpawnManager } from "./structure/spawn/SpawnManager";
-
+import { ConstructionManager } from "./construction/ConstructionManager";
 
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
 export const loop = ErrorMapper.wrapLoop(() => {
     // console.log(`Current game tick is ${Game.time}`);
-    for (const spawnsKey in Game.spawns) SpawnManager.run(Game.spawns[spawnsKey]);
 
-    for (const name in Game.creeps) {
-        const creep = Game.creeps[name];
-        CreepActionManager.manage(creep);
-    }
+    SpawnManager.run();
+    ConstructionManager.run();
+    CreepActionManager.run();
 
     // Automatically delete memory of missing creeps
     handleMemory();
