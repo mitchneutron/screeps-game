@@ -15,6 +15,15 @@ declare global {
     interface Memory {
         uuid: number;
         log: any;
+        storages: {[id: string]: StorageMemory}
+    }
+
+    interface StorageMemory {
+        storage?: Id<StructureStorage>
+    }
+
+    interface StructureStorage {
+        memory: StorageMemory
     }
 
     interface CreepMemory {
@@ -30,6 +39,12 @@ declare global {
         deadCreepsToSpawn: CreepMemory[];
         basicWorkersRequired: number;
         advancedWorkersRequired: number;
+    }
+
+    interface RoomMemory {
+        priority: number;
+        buildingLevel: number;
+        isInitialized?: boolean;
     }
 
     // Syntax for adding proprties to `global` (ex "global.log")

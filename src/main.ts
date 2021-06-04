@@ -1,7 +1,8 @@
+import { ConstructionManager } from "./construction/ConstructionManager";
 import { CreepActionManager } from "./creep/CreepActionManager";
 import { ErrorMapper } from "./utils/ErrorMapper";
-import { SpawnManager } from "./structure/spawn/SpawnManager";
-import { ConstructionManager } from "./construction/ConstructionManager";
+import { RoomManager } from "./room/RoomManager";
+import { SpawnManager } from "./creep/spawn/SpawnManager";
 
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
@@ -9,6 +10,11 @@ import { ConstructionManager } from "./construction/ConstructionManager";
 export const loop = ErrorMapper.wrapLoop(() => {
     // console.log(`Current game tick is ${Game.time}`);
 
+    // if(Memory.storages == null)
+    //     Memory.storages = {};
+    // StructureStorage.prototype.memory =
+
+    RoomManager.run();
     SpawnManager.run();
     ConstructionManager.run();
     CreepActionManager.run();
