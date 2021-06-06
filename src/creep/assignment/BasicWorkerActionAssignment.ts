@@ -2,6 +2,7 @@ import { CreepActionConst } from "../../const/CreepActionConst";
 import { AbstractActionAssignment, isAvailableStorageStructure } from "./AbstractActionAssignment";
 
 export class BasicWorkerActionAssignment extends AbstractActionAssignment {
+    // todo want to collect energy from containers as a priority
     _assignAction(creep: Creep): void {
         creep.memory.target = undefined;
         if (creep.store.getUsedCapacity() === 0) {

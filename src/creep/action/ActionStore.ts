@@ -1,4 +1,4 @@
-import { AbstractAction } from "./AbstractAction";
+import { AbstractAction } from "./type/AbstractAction";
 
 export class ActionStore extends AbstractAction<Creep | PowerCreep | Structure> {
     protected _performAction(creep: Creep, target: Creep | PowerCreep | Structure): boolean {

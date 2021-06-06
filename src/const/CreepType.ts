@@ -1,4 +1,6 @@
 export enum CreepType {
     BasicWorker,
-    AdvancedWorker,
+    Harvester,
+    Carrier,
+    Settler
 }

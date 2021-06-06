@@ -28,7 +28,7 @@ declare global {
 
     interface CreepMemory {
         name: string;
-        spawn: Id<StructureSpawn>;
+        spawn?: Id<StructureSpawn>;
         type: CreepType;
         target?: Id<any>;
         action?: CreepActionConst;
@@ -36,9 +36,11 @@ declare global {
 
     interface SpawnMemory {
         isInitialized?: boolean;
-        deadCreepsToSpawn: CreepMemory[];
-        basicWorkersRequired: number;
-        advancedWorkersRequired: number;
+        deadCreeps: CreepMemory[];
+        requiredCreeps: Map<CreepType, number>
+        activeCreeps: Map<CreepType, number>
+        queue: CreepMemory[];
+
     }
 
     interface RoomMemory {

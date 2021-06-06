@@ -1,7 +1,7 @@
-import { ActionBuild } from "./ActionBuild";
-import { ActionHarvest } from "./ActionHarvest";
+import { ActionBuild } from "./type/ActionBuild";
+import { ActionHarvest } from "./type/ActionHarvest";
 import { ActionStore } from "./ActionStore";
-import { ActionUpgrade } from "./ActionUpgrade";
+import { ActionUpgrade } from "./type/ActionUpgrade";
 import { CreepActionConst } from "../../const/CreepActionConst";
 import { ICreepAction } from "./ICreepAction";
 

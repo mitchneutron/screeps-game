@@ -1,4 +1,4 @@
-import { ICreepAction } from "./ICreepAction";
+import { ICreepAction } from "../ICreepAction";
 
 export abstract class AbstractAction<T> implements ICreepAction {
     performAction(creep: Creep): boolean {

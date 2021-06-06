@@ -1,3 +1,3 @@
 export interface IBuildingPlacement {
-    placeBuilding(room : Room) : boolean
+    findLocation(room : Room) : RoomPosition | undefined
 }
