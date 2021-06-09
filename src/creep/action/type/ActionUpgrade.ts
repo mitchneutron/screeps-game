@@ -1,20 +1,16 @@
-import { AbstractAction } from "./AbstractAction";
+import { AbstractActionOrMove } from "./AbstractActionOrMove";
 
-export class ActionUpgrade extends AbstractAction<StructureController> {
-    _performAction(creep: Creep, target: StructureController): boolean {
-        const result = creep.upgradeController(target);
-        if (result === ERR_NOT_IN_RANGE) {
-            return  this.moveCreep(creep, target.pos);
-        }
-        return this.isValidResult(result);
-    }
-
+export class ActionUpgrade extends AbstractActionOrMove<StructureController> {
     cancelOnEmpty(): boolean {
         return true;
     }
 
     cancelOnFull(): boolean {
         return false;
+    }
+
+    protected _action(creep: Creep, target: StructureController): ScreepsReturnCode {
+        return creep.upgradeController(target);
     }
 
 }

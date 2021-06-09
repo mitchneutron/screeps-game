@@ -27,6 +27,7 @@ export abstract class AbstractAction<T> implements ICreepAction {
                 opacity: 0.1,
             },
         });
+        // if(result === ERR_NO_PATH) debugger;
         return this.isValidResult(result);
     }
 

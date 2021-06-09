@@ -1,18 +1,16 @@
-import { AbstractAction } from "./AbstractAction";
+import { AbstractActionOrMove } from "./AbstractActionOrMove";
 
-export class ActionBuild extends AbstractAction<ConstructionSite> {
-    protected _performAction(creep: Creep, target: ConstructionSite): boolean {
-        const result = creep.build(target);
-        if(result === ERR_NOT_IN_RANGE) return this.moveCreep(creep, target.pos);
-        return this.isValidResult(result);
-    }
-
+export class ActionBuild extends AbstractActionOrMove<ConstructionSite> {
     cancelOnEmpty(): boolean {
-        return false;
+        return true;
     }
 
     cancelOnFull(): boolean {
         return false;
+    }
+
+    protected _action(creep: Creep, target: ConstructionSite): ScreepsReturnCode {
+        return creep.build(target);
     }
 
 }

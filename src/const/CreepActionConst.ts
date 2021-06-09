@@ -3,4 +3,6 @@ export enum CreepActionConst {
     Build,
     Upgrade,
     Store,
+    PickUp,
+    Withdraw,
 }

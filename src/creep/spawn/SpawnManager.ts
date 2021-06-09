@@ -1,9 +1,8 @@
 import { CreepType } from "../../const/CreepType";
+import { EnumToArray, InitializeRecord } from "../../utils/EnumUtils";
+import { BodyCreatorFactory } from "../body/BodyCreatorFactory";
 
 export class SpawnManager {
-    private static bodyMap: Map<CreepType, BodyPartConstant[]> = new Map([
-        [CreepType.BasicWorker, [WORK, CARRY, MOVE]],
-    ]);
 
     static run(): void {
         for (const spawnsKey in Game.spawns)
@@ -11,26 +10,37 @@ export class SpawnManager {
     }
 
     static handleSpawn(spawn: StructureSpawn) : void {
-        if (spawn.memory.isInitialized !== true) this.initSpawn(spawn);
+        if (spawn.memory.isInitialized !== true || spawn.memory.requiredCreeps === undefined || spawn.memory.activeCreeps === undefined) this.initSpawn(spawn);
         for(const creepMemory of spawn.memory.deadCreeps){
             spawn.memory.queue.push(creepMemory);
-            let current = spawn.memory.activeCreeps.get(creepMemory.type)!;
-            current--;
-            spawn.memory.activeCreeps.set(creepMemory.type, current);
+            spawn.memory.activeCreeps[creepMemory.type]!--;
         }
         spawn.memory.deadCreeps = [];
 
         // we want to spawn creeps if they are in the queue or if we don't have enough active creeps.
-        if (spawn.memory.activeWorkers < spawn.memory.maxWorkers) {
-            const creepName = "Worker_" + spawn.name + "_" + Date.now();
-            if (
-                spawn.spawnCreep([WORK, CARRY, MOVE], creepName, {
-                    memory: this.createCreepMemory(CreepType.BasicWorker, spawn.id, creepName),
-                }) === OK
-            ) {
-                spawn.memory.activeWorkers++;
-            }
+
+        // priority should be on our own creeps, and then requested creeps.
+        for(const type of Object.values(CreepType)) {
+            if(typeof type == "string") continue;
+            const active = spawn.memory.activeCreeps[type]!;
+            const required = spawn.memory.requiredCreeps[type]!;
+            if(active >= required) return;
+            const result = SpawnManager.attemptCreepSpawn(spawn, type);
+            if(result === OK || result === ERR_BUSY) return;
         }
+        if(spawn.memory.queue.length > 0)
+            this.spawnFromQueue(spawn);
+    }
+
+    private static attemptCreepSpawn(spawn: StructureSpawn, type: CreepType, memory?: CreepMemory) : ScreepsReturnCode {
+        const energy = spawn.room.energyAvailable;
+        const body = BodyCreatorFactory.create(type)!.createBody(energy);
+        memory = memory??this.createCreepMemory(type, spawn.id, this.toName(spawn, type));
+        return spawn.spawnCreep(body, memory.name, {memory});
+    }
+
+    private static toName(spawn: StructureSpawn, type: CreepType) : string {
+        return CreepType[type] + "_" + spawn.name + "_" + Date.now();
     }
 
     private static createCreepMemory(type: CreepType, spawnId: Id<StructureSpawn>, name: string): CreepMemory {
@@ -42,24 +52,32 @@ export class SpawnManager {
     }
 
     private static initSpawn(spawn: StructureSpawn) {
-        spawn.memory.activeCreeps = new Map<CreepType, number>();
-        for(const type of Object.values(CreepType)) {
-            spawn.memory.activeCreeps.set(type, 0);
-        }
+        spawn.memory.activeCreeps = InitializeRecord(EnumToArray(CreepType), 0);
+        spawn.memory.requiredCreeps = SpawnManager.computeRequiredCreeps(spawn);
         spawn.memory.deadCreeps = [];
         spawn.memory.queue = [];
         spawn.memory.isInitialized = true;
     }
 
-    private static popDeadCreep(spawn: StructureSpawn) {
-        const creepMemory = spawn.memory.deadCreeps[0];
-        const body: BodyPartConstant[] = this.bodyMap.get(creepMemory.type)!;
-        const spawnResult = spawn.spawnCreep(body, creepMemory.name, {
-            memory: creepMemory,
-        });
+    // todo we will want to have creeps dedicated to other room resources too.
+    private static computeRequiredCreeps(spawn: StructureSpawn) : Record<CreepType, number> {
+        const harvester = spawn.room.find(FIND_SOURCES).length + spawn.room.find(FIND_MINERALS).length;
+        const carrier = Math.ceil(harvester / 3);
+        const basicWorker = 3;
+        return {
+            [CreepType.BasicWorker]: basicWorker,
+            [CreepType.Carrier]: carrier,
+            [CreepType.Harvester]: harvester,
+            [CreepType.Settler]: 0,
+        };
+    }
+
+    private static spawnFromQueue(spawn: StructureSpawn) {
+        const creepMemory = spawn.memory.queue[0];
+        const spawnResult = this.attemptCreepSpawn(spawn, creepMemory.type, creepMemory);
         if (spawnResult === OK) {
             spawn.memory.deadCreeps.splice(0, 1);
-            console.log(spawn.name + ": spawning dead creep.");
+            console.log(spawn.name + ": spawning queued creep.");
         }
         return spawnResult;
     }

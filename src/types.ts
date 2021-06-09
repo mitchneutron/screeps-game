@@ -37,8 +37,8 @@ declare global {
     interface SpawnMemory {
         isInitialized?: boolean;
         deadCreeps: CreepMemory[];
-        requiredCreeps: Map<CreepType, number>
-        activeCreeps: Map<CreepType, number>
+        requiredCreeps: Record<CreepType, number>
+        activeCreeps: Record<CreepType, number>
         queue: CreepMemory[];
 
     }

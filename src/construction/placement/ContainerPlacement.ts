@@ -2,7 +2,6 @@ import { IBuildingPlacement } from "./IBuildingPlacement";
 
 export class ContainerPlacement implements IBuildingPlacement{
     findLocation(room: Room): RoomPosition | undefined {
-        debugger;
         const sources : Source[] = room.find(FIND_SOURCES);
         const existingContainerPositions = room.find(FIND_STRUCTURES, {filter: (x : Structure ) => x.structureType === STRUCTURE_CONTAINER }).map((x) => x.pos);
         let position: RoomPosition | undefined;
@@ -10,7 +9,7 @@ export class ContainerPlacement implements IBuildingPlacement{
             if(existingContainerPositions.length > 0){
                 const result = PathFinder.search(source.pos, existingContainerPositions, {maxCost: 3});
                 if(!result.incomplete) {
-                    console.log("found container at source");
+                    // console.log("found container at source");
                     continue;
                 }
             }

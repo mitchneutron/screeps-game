@@ -17,3 +17,11 @@ export function isAvailableStorageStructure(structure: Structure): boolean {
         (structure as StructureStorage).store.getFreeCapacity(RESOURCE_ENERGY) > 0
     );
 }
+
+export function isAvailablePriorityStorage(structure: Structure): boolean {
+    return (
+        (structure.structureType === STRUCTURE_EXTENSION ||
+            structure.structureType === STRUCTURE_SPAWN) &&
+        (structure as StructureStorage).store.getFreeCapacity(RESOURCE_ENERGY) > 0
+    );
+}

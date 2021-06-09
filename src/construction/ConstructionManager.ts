@@ -21,7 +21,7 @@ export class ConstructionManager {
                     console.log('Failed to place building '.concat(structure).concat(' in room ').concat(room.name));
                 } else {
                     if(room.createConstructionSite(location, structure) !== OK){
-                        console.log("Found location but failed to place building ".concat(structure));
+                        // console.log("Found location but failed to place building ".concat(structure));
                     }
                 }
             }
