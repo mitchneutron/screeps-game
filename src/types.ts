@@ -25,6 +25,10 @@ declare global {
         assignedCreeps?: string[]
     }
 
+    interface DeadCreepReceiver {
+        receive(memory: CreepMemory) : void
+    }
+
     interface CreepMemory {
         name: string;
         spawn?: Id<StructureSpawn>;
@@ -47,6 +51,7 @@ declare global {
         priority: number;
         buildingLevel: number;
         isInitialized?: boolean;
+
     }
 
     interface Runnable {

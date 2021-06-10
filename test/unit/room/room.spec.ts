@@ -4,15 +4,26 @@ import { RoomManager } from "../../../src/room/RoomManager";
 const spawn1 = mockStructure(STRUCTURE_SPAWN);
 const spawn2 = mockStructure(STRUCTURE_SPAWN);
 
-let uninitializedRoom: Room;
+let uninitializedRoom1: Room;
+let uninitializedRoom2: Room;
 
 let initializedRoom: Room;
+let service: RoomManager;
 
 describe("Room Manager", () => {
     beforeEach(() => {
-       uninitializedRoom = mockInstanceOf<Room>({
+        uninitializedRoom1 = mockInstanceOf<Room>({
             memory: {
                 isInitialized: undefined,
+                buildingLevel: undefined,
+                priority: undefined
+            },
+            find: () => [spawn1, spawn2],
+            controller: mockStructure(STRUCTURE_CONTROLLER, {my: true}),
+        });
+        uninitializedRoom2 = mockInstanceOf<Room>({
+            memory: {
+                isInitialized: false,
                 buildingLevel: undefined,
                 priority: undefined
             },
@@ -24,22 +35,20 @@ describe("Room Manager", () => {
                isInitialized: true
            }
        });
-        mockGlobal<Memory>('Memory', { creeps: {}, sources: undefined });
-        mockGlobal<Game>('Game', {
-            rooms: { uninitializedRoom, initializedRoom }
-        });
+       service = new RoomManager([uninitializedRoom1, uninitializedRoom2, initializedRoom]);
     });
 
-    const manager = new RoomManager();
     it("initialize rooms correctly", () => {
-        manager.run();
-        expect(uninitializedRoom.memory.isInitialized).toBe(true);
-        expect(uninitializedRoom.memory.priority).toBe(3); // one for each spawn and controller I own
-        expect(uninitializedRoom.memory.buildingLevel).toBe(-1);
+        service.run();
+        expect(uninitializedRoom1.memory.isInitialized).toBe(true);
+        expect(uninitializedRoom1.memory.priority).toBe(3); // one for each spawn and controller I own
+        expect(uninitializedRoom1.memory.buildingLevel).toBe(-1);
+
+        expect(uninitializedRoom2.memory.isInitialized).toBe(true);
     });
 
-    it("initialized rooms done get reinitialized", () => {
-        manager.run();
+    it("initialized rooms stay initialized", () => {
+        service.run();
         expect(initializedRoom.memory.isInitialized).toBe(true);
     });
 });

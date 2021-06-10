@@ -14,11 +14,17 @@ function unwrappedLoop(services: Runnable[]): void {
 }
 
 const loop = ErrorMapper.wrapLoop(() => unwrappedLoop([
-    new ConstructionManager(),
-    new CreepActionManager(),
-    new SpawnManager(),
-    new RoomManager(),
-    new MemoryCleanup()
+    new CreepActionManager(Object.values(Game.creeps)),
+    new SpawnManager(Object.values(Game.spawns)),
+    new RoomManager(Object.values(Game.rooms), new ConstructionManager()),
+    new MemoryCleanup(Game.creeps, Memory.creeps, {
+        receive(memory: CreepMemory) {
+            if (memory.spawn) {
+                Game.getObjectById(memory.spawn)?.memory.deadCreeps.push(memory);
+            }
+        },
+
+    }),
 ]));
 
 export {

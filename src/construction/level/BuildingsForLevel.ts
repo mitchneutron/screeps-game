@@ -27,7 +27,9 @@ export class BuildingsForLevel {
     }
 
     private static levelTwo(): StructureConstant[] {
-        return Array(5).fill(STRUCTURE_EXTENSION) as StructureConstant[];
+        const arr =  Array(5).fill(STRUCTURE_EXTENSION) as StructureConstant[];
+
+        return arr;
     }
 
     private static levelThree(): StructureConstant[] {

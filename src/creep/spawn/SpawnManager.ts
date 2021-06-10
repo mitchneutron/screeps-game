@@ -3,10 +3,15 @@ import { EnumToArray, InitializeRecord } from "../../utils/EnumUtils";
 import { BodyCreatorFactory } from "../body/BodyCreatorFactory";
 
 export class SpawnManager {
+    private readonly spawns: StructureSpawn[];
+
+    constructor(spawns: StructureSpawn[]) {
+        this.spawns = spawns;
+    }
 
     run(): void {
-        for (const spawnsKey in Game.spawns)
-            SpawnManager.handleSpawn(Game.spawns[spawnsKey]);
+        for (const spawn of this.spawns)
+            SpawnManager.handleSpawn(spawn);
     }
 
     static handleSpawn(spawn: StructureSpawn): void {
