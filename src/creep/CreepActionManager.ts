@@ -2,7 +2,7 @@ import { ActionFactory } from "./action/ActionFactory";
 import { AssignmentFactory } from "./assignment/AssignmentFactory";
 
 export class CreepActionManager {
-    static run(): void {
+    run(): void {
         for (const name in Game.creeps) {
             const creep = Game.creeps[name];
             if (creep.memory.action == null || creep.memory.target == null)

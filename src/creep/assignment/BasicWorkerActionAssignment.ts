@@ -18,7 +18,7 @@ export class BasicWorkerActionAssignment extends AbstractActionAssignment {
     }
 
     private static assignWithdraw(creep: Creep): boolean {
-        const containers = creep.room.find(FIND_STRUCTURES).filter(x => x.structureType === STRUCTURE_CONTAINER);
+        const containers = creep.room.find(FIND_STRUCTURES, {filter: x => x.structureType === STRUCTURE_CONTAINER});
         if (containers.length > 0) {
             creep.memory.target = containers[0].id;
             return true;

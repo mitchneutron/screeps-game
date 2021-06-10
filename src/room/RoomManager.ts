@@ -1,13 +1,14 @@
 export class RoomManager {
-    static run() : void {
+    run() : void {
         for(const name in Game.rooms) {
             const room = Game.rooms[name];
-            if(room.memory.isInitialized === undefined || room.memory.isInitialized === false) this.initializeRoomMemory(room);
+            if(room.memory.isInitialized === undefined || room.memory.isInitialized === false) RoomManager.initializeRoomMemory(room);
         }
     }
     private static initializeRoomMemory(room: Room) : void {
         room.memory.buildingLevel = -1;
         this.assignRoomPriority(room);
+        room.memory.isInitialized = true;
     }
 
     private static assignRoomPriority(room: Room) : void {

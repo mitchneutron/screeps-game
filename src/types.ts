@@ -1,5 +1,8 @@
 import { CreepActionConst } from "./const/CreepActionConst";
 import { CreepType } from "./const/CreepType";
+import { ConstructionManager } from "./construction/ConstructionManager";
+import { SpawnManager } from "./creep/spawn/SpawnManager";
+import { RoomManager } from "./room/RoomManager";
 
 export {};
 /*
@@ -15,15 +18,11 @@ declare global {
     interface Memory {
         uuid: number;
         log: any;
-        storages: {[id: string]: StorageMemory}
+        sources: {[id: string]: SourceMemory}
     }
 
-    interface StorageMemory {
-        storage?: Id<StructureStorage>
-    }
-
-    interface StructureStorage {
-        memory: StorageMemory
+    interface SourceMemory {
+        assignedCreeps?: string[]
     }
 
     interface CreepMemory {
@@ -32,6 +31,7 @@ declare global {
         type: CreepType;
         target?: Id<any>;
         action?: CreepActionConst;
+        goalTarget?: Id<any>;
     }
 
     interface SpawnMemory {
@@ -49,10 +49,18 @@ declare global {
         isInitialized?: boolean;
     }
 
+    interface Runnable {
+        run(): void
+    }
+
     // Syntax for adding proprties to `global` (ex "global.log")
     namespace NodeJS {
         interface Global {
             log: any;
+            roomManager: RoomManager
+            spawnMamager: SpawnManager
+            constructionManager: ConstructionManager
+
         }
     }
 }

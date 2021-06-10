@@ -2,13 +2,13 @@ import {BuildingPlacementFactory} from "./placement/BuildingPlacementFactory";
 import {BuildingsForLevel} from "./level/BuildingsForLevel";
 
 export class ConstructionManager {
-    static run() : void {
+    run() : void {
         // ask for what buildings we need to make
         this.createConstructionSitesForControllerLeveling();
         const requestedByRoomAndPosition : [RoomPosition, BuildableStructureConstant][] = this.getRequestedBuildingsByPosition();
     }
 
-    private static createConstructionSitesForControllerLeveling() : void{
+    private createConstructionSitesForControllerLeveling() : void{
         for(const name in Game.rooms) {
             const room = Game.rooms[name];
             if(room.memory.priority === 0) continue;
@@ -28,7 +28,7 @@ export class ConstructionManager {
         }
     }
 
-    private static getRequestedBuildingsByPosition() {
+    private getRequestedBuildingsByPosition() {
         return [];
     }
 }
