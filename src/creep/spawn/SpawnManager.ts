@@ -17,7 +17,7 @@ export class SpawnManager {
     static handleSpawn(spawn: StructureSpawn): void {
         if (spawn.memory.isInitialized !== true || spawn.memory.requiredCreeps === undefined || spawn.memory.activeCreeps === undefined) this.initSpawn(spawn);
         for (const creepMemory of spawn.memory.deadCreeps) {
-            spawn.memory.queue.push(creepMemory);
+            // spawn.memory.queue.push(creepMemory);
             spawn.memory.activeCreeps[creepMemory.type]!--;
         }
         spawn.memory.deadCreeps = [];
@@ -41,7 +41,6 @@ export class SpawnManager {
                 spawn.memory.activeCreeps[type]++;
                 return;
             }
-
         }
 
         if (spawn.memory.queue.length > 0)

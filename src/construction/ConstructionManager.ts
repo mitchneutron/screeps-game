@@ -2,7 +2,11 @@ import { RoomManager } from "../room/RoomManager";
 import {BuildingPlacementFactory} from "./placement/BuildingPlacementFactory";
 import {BuildingsForLevel} from "./level/BuildingsForLevel";
 
-export class ConstructionManager {
+export interface IConstructionManager {
+    run: (room: Room) => void;
+}
+
+export class ConstructionManager implements IConstructionManager{
     run(room: Room) : void {
         // if the room is low priority, has no controller, or we have built to the current level, then pass on construction.
         if(room.memory.priority === 0 || room.controller === undefined || room.memory.buildingLevel === room.controller.level) return;

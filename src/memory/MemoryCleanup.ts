@@ -17,7 +17,7 @@ export class MemoryCleanup implements Runnable {
         for (const name in this.creepMemories) {
             if (!this.liveCreeps[name]) {
                 this.creepReceiver.receive(this.creepMemories[name]);
-                console.log("Removing creep from memory: " + this.creepMemories[name]);
+                console.log("Removing creep from memory: " + name);
                 delete this.creepMemories[name];
             }
         }

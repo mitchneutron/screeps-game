@@ -1,5 +1,5 @@
 import "types.ts";
 
 export interface ICreepAction {
-    performAction(creep: Creep) : boolean
+    performAction: (creep: Creep) => boolean
 }

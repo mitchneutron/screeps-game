@@ -1,4 +1,6 @@
 import { ConstructionManager } from "./construction/ConstructionManager";
+import { ActionFactory } from "./creep/action/ActionFactory";
+import { AssignmentFactory } from "./creep/assignment/AssignmentFactory";
 import { CreepActionManager } from "./creep/CreepActionManager";
 import { SpawnManager } from "./creep/spawn/SpawnManager";
 import { MemoryCleanup } from "./memory/MemoryCleanup";
@@ -14,7 +16,7 @@ function unwrappedLoop(services: Runnable[]): void {
 }
 
 const loop = ErrorMapper.wrapLoop(() => unwrappedLoop([
-    new CreepActionManager(Object.values(Game.creeps)),
+    new CreepActionManager(Object.values(Game.creeps), new AssignmentFactory(), new ActionFactory()),
     new SpawnManager(Object.values(Game.spawns)),
     new RoomManager(Object.values(Game.rooms), new ConstructionManager()),
     new MemoryCleanup(Game.creeps, Memory.creeps, {

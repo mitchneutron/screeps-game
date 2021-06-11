@@ -1,5 +1,8 @@
-import { mockGlobal, mockInstanceOf, mockStructure } from "screeps-jest/src/mocking";
+import { mockInstanceOf, mockStructure } from "screeps-jest/src/mocking";
+import { IConstructionManager } from "../../../src/construction/ConstructionManager";
 import { RoomManager } from "../../../src/room/RoomManager";
+
+let construction: IConstructionManager;
 
 const spawn1 = mockStructure(STRUCTURE_SPAWN);
 const spawn2 = mockStructure(STRUCTURE_SPAWN);
@@ -8,10 +11,16 @@ let uninitializedRoom1: Room;
 let uninitializedRoom2: Room;
 
 let initializedRoom: Room;
+
+let rooms: Room[];
 let service: RoomManager;
 
 describe("Room Manager", () => {
     beforeEach(() => {
+        construction = mockInstanceOf<IConstructionManager>({
+            run: (room: Room) => void {
+            }
+        });
         uninitializedRoom1 = mockInstanceOf<Room>({
             memory: {
                 isInitialized: undefined,
@@ -33,9 +42,12 @@ describe("Room Manager", () => {
        initializedRoom = mockInstanceOf<Room>({
            memory: {
                isInitialized: true
-           }
+           },
+           find: () => [spawn1, spawn2],
+           controller: mockStructure(STRUCTURE_CONTROLLER, {my: true}),
        });
-       service = new RoomManager([uninitializedRoom1, uninitializedRoom2, initializedRoom]);
+       rooms = [uninitializedRoom1, uninitializedRoom2, initializedRoom];
+       service = new RoomManager(rooms, construction);
     });
 
     it("initialize rooms correctly", () => {
@@ -50,6 +62,11 @@ describe("Room Manager", () => {
     it("initialized rooms stay initialized", () => {
         service.run();
         expect(initializedRoom.memory.isInitialized).toBe(true);
+    });
+
+    it("runs the construction manager on every room", () => {
+        service.run();
+        expect(construction.run).toBeCalledTimes(rooms.length);
     });
 });
 

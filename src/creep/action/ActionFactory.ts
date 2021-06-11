@@ -7,6 +7,10 @@ import { CreepActionConst } from "../../const/CreepActionConst";
 import { ICreepAction } from "./ICreepAction";
 import { ActionWithdraw } from "./type/ActionWithdraw";
 
+export interface IActionFactory {
+    create(type: CreepActionConst) : ICreepAction;
+}
+
 export class ActionFactory {
     private static bodyMap: Map<CreepActionConst, ICreepAction> = new Map([
         [CreepActionConst.Build, new ActionBuild() as ICreepAction],
@@ -17,7 +21,7 @@ export class ActionFactory {
         [CreepActionConst.PickUp, new ActionPickUp()],
     ]);
 
-    static create(type: CreepActionConst) : ICreepAction {
+    create(type: CreepActionConst) : ICreepAction {
         return ActionFactory.bodyMap.get(type)!;
     }
 }
