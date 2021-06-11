@@ -1,16 +1,16 @@
 import { mockInstanceOf } from "screeps-jest/src/mocking";
-import { CreepActionConst } from "../../../src/const/CreepActionConst";
-import { CreepType } from "../../../src/const/CreepType";
-import { IActionFactory } from "../../../src/creep/action/ActionFactory";
-import { ICreepAction } from "../../../src/creep/action/ICreepAction";
-import { IAssignmentFactory } from "../../../src/creep/assignment/AssignmentFactory";
-import { IActionAssignment } from "../../../src/creep/assignment/IActionAssignment";
-import { CreepActionManager } from "../../../src/creep/CreepActionManager";
+import { CreepActionConst } from "../../../../src/const/CreepActionConst";
+import { CreepType } from "../../../../src/const/CreepType";
+import { IActionFactory } from "../../../../src/creep/action/ActionFactory";
+import { ICreepAction } from "../../../../src/creep/action/ICreepAction";
+import { IAssignmentManagerFactory } from "../../../../src/creep/assignment/AssignmentFactory";
+import { IActionAssignmentManager } from "../../../../src/creep/assignment/IActionAssignmentManager";
+import { CreepActionManager } from "../../../../src/creep/action/CreepActionManager";
 
 let creeps: Creep[];
 let service: CreepActionManager;
-const assignment = mockInstanceOf<IAssignmentFactory>({
-    create(type: CreepType): IActionAssignment {
+const assignment = mockInstanceOf<IAssignmentManagerFactory>({
+    create(type: CreepType): IActionAssignmentManager {
         return {
             assignAction(creep: Creep) {
                 creep.memory.action = CreepActionConst.PickUp;

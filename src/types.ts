@@ -19,6 +19,7 @@ declare global {
         uuid: number;
         log: any;
         sources: {[id: string]: SourceMemory}
+        queue: CreepMemory[];
     }
 
     interface SourceMemory {
