@@ -1,6 +1,6 @@
-import { AbstractAction } from "./type/AbstractAction";
+import { AbstractAction } from "./AbstractAction";
 
-export class ActionStore extends AbstractAction<Creep | PowerCreep | Structure> {
+export class Store extends AbstractAction<Creep | PowerCreep | Structure> {
     protected _performAction(creep: Creep, target: Creep | PowerCreep | Structure): boolean {
         const result = creep.transfer(target, RESOURCE_ENERGY);
         if (result === ERR_NOT_IN_RANGE) {

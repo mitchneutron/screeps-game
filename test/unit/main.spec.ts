@@ -7,12 +7,12 @@ class Service {
     };
 }
 describe("main loop", () => {
-    mockGlobal<Memory>('Memory', { creeps: {}, sources: undefined, queue: undefined });
+    mockGlobal<Memory>('Memory', { creeps: {}, sources: undefined, globalSpawnQueue: undefined });
 
     it("instantiates the source memory", () => {
         unwrappedLoop([]);
         expect(Memory.sources !== undefined);
-        expect(Memory.queue !== undefined);
+        expect(Memory.globalSpawnQueue !== undefined);
     });
 
     it("runs all services passed in", () => {

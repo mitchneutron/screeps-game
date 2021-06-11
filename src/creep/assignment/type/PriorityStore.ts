@@ -1,8 +1,8 @@
-import { StoreAssignment } from "./StoreAssignment";
+import { Store } from "./Store";
 
-export class PriorityStoreAssignment extends StoreAssignment {
+export class PriorityStore extends Store {
     constructor() {
-        super(PriorityStoreAssignment.isAvailablePriorityStorage);
+        super(PriorityStore.isAvailablePriorityStorage);
     }
 
     static isAvailablePriorityStorage = (structure: Structure): boolean => {

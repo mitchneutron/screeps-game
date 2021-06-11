@@ -19,7 +19,12 @@ declare global {
         uuid: number;
         log: any;
         sources: {[id: string]: SourceMemory}
-        queue: CreepMemory[];
+        globalSpawnQueue: CreepMemory[];
+    }
+
+    interface Reservation {
+        reserved: {[id: string]: Id<any>[]}
+        owner: {[id: string]: Id<any>[]}
     }
 
     interface SourceMemory {

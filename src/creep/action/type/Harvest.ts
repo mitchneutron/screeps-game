@@ -1,6 +1,6 @@
 import { AbstractActionOrMove } from "./AbstractActionOrMove";
 
-export class ActionHarvest extends AbstractActionOrMove<Source | Mineral | Deposit> {
+export class Harvest extends AbstractActionOrMove<Source | Mineral | Deposit> {
     cancelOnEmpty(): boolean {
         return false;
     }

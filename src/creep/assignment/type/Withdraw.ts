@@ -1,7 +1,7 @@
 import { CreepActionConst } from "../../../const/CreepActionConst";
 import { CachedActionAssignment } from "./CachedActionAssignment";
 
-export class WithdrawAssignment extends CachedActionAssignment<Structure> {
+export class Withdraw extends CachedActionAssignment<Structure> {
     private readonly filter: (structure: Structure) => boolean;
 
     constructor(filter: (structure: Structure) => boolean) {
@@ -15,12 +15,16 @@ export class WithdrawAssignment extends CachedActionAssignment<Structure> {
         return true;
     }
 
-    _shouldAssign(creep: Creep): boolean {
+    preCacheShouldAssign(creep: Creep): boolean {
         return creep.store.getUsedCapacity() === 0;
     }
 
     getNewData(creep: Creep): Structure[] {
         return creep.room.find(FIND_STRUCTURES, { filter: this.filter });
+    }
+
+    protected postCacheShouldAssign(creep: Creep): boolean {
+        return true;
     }
 }
 

@@ -1,6 +1,6 @@
 import { AbstractActionOrMove } from "./AbstractActionOrMove";
 
-export class ActionUpgrade extends AbstractActionOrMove<StructureController> {
+export class Upgrade extends AbstractActionOrMove<StructureController> {
     cancelOnEmpty(): boolean {
         return true;
     }

@@ -1,7 +1,7 @@
 import { CreepActionConst } from "../../../const/CreepActionConst";
 import { IActionAssignment } from "./IActionAssignment";
 
-export class ControllerUpgradeAssignment implements IActionAssignment {
+export class ControllerUpgrade implements IActionAssignment {
     assign(creep: Creep): boolean {
         const controller = creep.room.controller;
         if (controller == null) return false;

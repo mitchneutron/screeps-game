@@ -1,19 +1,27 @@
-import { ActionAssignment } from "./ActionAssignment";
+import { ActionAssignment} from "./ActionAssignment";
 import { CreepType } from "../../const/CreepType";
-import { IActionAssignmentManager } from "./IActionAssignmentManager";
+import { BasicWorkerAssignment } from "./BasicWorkerAssignment";
+import { CarrierAssignment } from "./CarrierAssignment";
+import { HarvesterAssignment } from "./HarvesterAssignment";
 
 export interface IAssignmentManagerFactory {
     create(type: CreepType): ActionAssignment | undefined
 }
 
 export class AssignmentFactory implements IAssignmentManagerFactory {
-    private static assignmentMap: Map<CreepType, ActionAssignment> = new Map([
-        [CreepType.BasicWorker, new ActionAssignment([])],
-        [CreepType.Harvester, new ActionAssignment([])],
-        [CreepType.Carrier, new ActionAssignment([])],
-    ]);
+    private readonly assignmentMap: Map<CreepType, ActionAssignment>;
+    private readonly harvesterRange: number;
+
+    constructor(harvesterRange: number) {
+        this.harvesterRange = harvesterRange;
+        this.assignmentMap = new Map([
+            [CreepType.BasicWorker, new BasicWorkerAssignment()],
+            [CreepType.Harvester, new HarvesterAssignment(this.harvesterRange)],
+            [CreepType.Carrier, new CarrierAssignment()],
+        ]);
+    }
 
     create(type: CreepType): ActionAssignment | undefined {
-        return AssignmentFactory.assignmentMap.get(type);
+        return this.assignmentMap.get(type);
     }
 }

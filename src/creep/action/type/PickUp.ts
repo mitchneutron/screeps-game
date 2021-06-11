@@ -1,6 +1,6 @@
 import { AbstractActionOrMove } from "./AbstractActionOrMove";
 
-export class ActionPickUp extends AbstractActionOrMove<Resource> {
+export class PickUp extends AbstractActionOrMove<Resource> {
     cancelOnEmpty(): boolean {
         return false;
     }

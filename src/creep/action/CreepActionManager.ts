@@ -15,7 +15,7 @@ export class CreepActionManager {
     run(): void {
         for (const creep of this.creeps) {
                 if (creep.memory.action == null || creep.memory.target == null)
-                this.assignmentFactory.create(creep.memory.type).assignAction(creep);
+                this.assignmentFactory.create(creep.memory.type)!.assignAction(creep);
             // TODO maybe I want to vary what actions actually do when the type is different? This would be an ActionFactoryFactory based on type.
             const result = this.actionFactory.create(creep.memory.action!).performAction(creep);
             if (!result) {

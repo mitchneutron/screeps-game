@@ -1,6 +1,6 @@
 import { AbstractActionOrMove } from "./AbstractActionOrMove";
 
-export class ActionBuild extends AbstractActionOrMove<ConstructionSite> {
+export class Build extends AbstractActionOrMove<ConstructionSite> {
     cancelOnEmpty(): boolean {
         return true;
     }

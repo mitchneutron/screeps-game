@@ -14,8 +14,8 @@ import { ErrorMapper } from "./utils/ErrorMapper";
 function unwrappedLoop(services: Runnable[]): void {
     if (Memory.sources == null)
         Memory.sources = {};
-    if (Memory.queue == null)
-        Memory.queue = [];
+    if (Memory.globalSpawnQueue == null)
+        Memory.globalSpawnQueue = [];
 
     services.forEach(service => service.run());
 }
@@ -24,7 +24,7 @@ const bodyCreatorFactory = new BodyCreatorFactory();
 
 const loop = ErrorMapper.wrapLoop(() => unwrappedLoop([
     new CreepActionManager(Object.values(Game.creeps), new AssignmentFactory(), new ActionFactory()),
-    new SpawnManager(Object.values(Game.spawns), [new RequiredCreepStrategy(bodyCreatorFactory), new QueueStrategy(bodyCreatorFactory, Memory.queue)]),
+    new SpawnManager(Object.values(Game.spawns), [new RequiredCreepStrategy(bodyCreatorFactory), new QueueStrategy(bodyCreatorFactory, Memory.globalSpawnQueue)]),
     new RoomManager(Object.values(Game.rooms), new ConstructionManager()),
     new MemoryCleanup(Game.creeps, Memory.creeps, {
         receive(memory: CreepMemory) {

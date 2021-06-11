@@ -1,7 +1,7 @@
 import { CreepActionConst } from "../../../const/CreepActionConst";
 import { IActionAssignment } from "./IActionAssignment";
 
-export class HarvestAssignment implements IActionAssignment{
+export class Harvest implements IActionAssignment{
     assign(creep: Creep): boolean {
         creep.memory.action = CreepActionConst.Harvest;
         const sources = creep.room.find(FIND_SOURCES_ACTIVE);
